@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dictionary App</title>
+    <style>
+        /* General page styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 80px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px 0 0 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3b82f6;
+        }
+
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2563eb;
+        }
+
+        .result {
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        .word {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .pronunciation {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .meaning {
+            font-size: 18px;
+            color: #1f2937;
+        }
+
+        .example {
+            font-size: 16px;
+            color: #374151;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        @media(max-width: 650px){
+            .container {
+                padding: 20px;
+                margin: 40px 20px;
+            }
+
+            input[type="text"] {
+                width: 60%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dictionary App</h1>
+        <form method="POST">
+            <input type="text" name="word" placeholder="Enter a word" required>
+            <input type="submit" value="Search">
+        </form>
+
+        {% if word %}
+        <div class="result">
+            <div class="word">{{ word }}</div>
+            {% if pronunciation %}
+            <div class="pronunciation">Pronunciation: {{ pronunciation }}</div>
+            {% endif %}
+            <div class="meaning">Meaning: {{ meaning }}</div>
+            {% if example %}
+            <div class="example">Example: {{ example }}</div>
+            {% else %}
+            <div class="example">Example: Not available</div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
