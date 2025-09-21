@@ -17,18 +17,16 @@ def home():
         word = request.form.get("word").lower()
         lang = request.form.get("lang")
 
-        # Transliteration for Hindi/Urdu
+        # 🔹 Hindi transliteration
         if lang == "hindi":
             script_word = transliterate(word, sanscript.ITRANS, sanscript.DEVANAGARI)
             meaning = f"Converted word: {script_word} (dictionary lookup not available yet)"
-        elif lang == "urdu":
-            script_word = transliterate(word, sanscript.ITRANS, sanscript.URDU)
-            meaning = f"Converted word: {script_word} (dictionary lookup not available yet)"
-        else:  # English
+
+        # 🔹 English dictionary lookup
+        else:
             script_word = word
             url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
             response = requests.get(url)
-
             if response.status_code == 200:
                 data = response.json()[0]
                 meanings = data.get("meanings", [])
