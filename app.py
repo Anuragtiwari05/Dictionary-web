@@ -31,7 +31,7 @@ def home():
                     meaning = definitions[0].get("definition", "No definition found")  ## Get the definition
                     example = definitions[0].get("example", "")  ## Get example if available
 
-            ## Extract pronunciation
+            
            
 
         else:  ## If the word is not found
