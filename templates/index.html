@@ -1,153 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dictionary App</title>
-    <style>
-        /* General page styling */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 80px auto;
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #1f2937;
-            margin-bottom: 30px;
-            font-size: 32px;
-        }
-
-        form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            gap: 8px;
-        }
-
-        input[type="text"] {
-            width: 50%;
-            padding: 12px 15px;
-            font-size: 16px;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus {
-            border-color: #3b82f6;
-        }
-
-        select {
-            padding: 12px;
-            font-size: 16px;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        select:focus {
-            border-color: #3b82f6;
-        }
-
-        input[type="submit"] {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: none;
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #2563eb;
-        }
-
-        .result {
-            margin-top: 20px;
-            line-height: 1.8;
-        }
-
-        .word {
-            font-size: 24px;
-            font-weight: bold;
-            color: #111827;
-        }
-
-        .pronunciation {
-            font-size: 16px;
-            color: #6b7280;
-            margin-bottom: 10px;
-        }
-
-        .meaning {
-            font-size: 18px;
-            color: #1f2937;
-        }
-
-        .example {
-            font-size: 16px;
-            color: #374151;
-            font-style: italic;
-            margin-top: 5px;
-        }
-
-        @media(max-width: 650px){
-            .container {
-                padding: 20px;
-                margin: 40px 20px;
-            }
-
-            input[type="text"] {
-                width: 40%;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Dictionary App</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 50px; }
+    .container { background: #fff; padding: 30px; border-radius: 10px; width: 100%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+    h1 { text-align: center; margin-bottom: 20px; }
+    form { display: flex; gap: 5px; margin-bottom: 20px; }
+    input[type="text"], select { flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+    input[type="submit"] { padding: 8px 15px; border: none; background: #3b82f6; color: white; border-radius: 5px; cursor: pointer; }
+    input[type="submit"]:hover { background: #2563eb; }
+    .result { margin-top: 15px; }
+    .word { font-weight: bold; font-size: 20px; }
+    .meaning, .example { margin-top: 5px; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Dictionary App</h1>
-        <form method="POST">
-            <input type="text" name="word" placeholder="Enter a word" required>
+<div class="container">
+    <h1>Dictionary App</h1>
+    <form method="POST">
+        <input type="text" name="word" placeholder="Enter a word" required>
+        <select name="lang">
+            <option value="english">English</option>
+            <option value="hindi">Hinglish → Hindi</option>
+        </select>
+        <input type="submit" value="Search">
+    </form>
 
-            <!-- 🔹 Language Selector -->
-            <select name="lang">
-                <option value="english">English</option>
-                <option value="hindi">Hinglish → Hindi</option>
-               
-            </select>
-
-            <input type="submit" value="Search">
-        </form>
-
-        {% if word %}
-        <div class="result">
-            <div class="word">{{ word }}</div>
-            {% if pronunciation %}
-            <div class="pronunciation">Pronunciation: {{ pronunciation }}</div>
-            {% endif %}
-            <div class="meaning">Meaning: {{ meaning }}</div>
-            {% if example %}
-            <div class="example">Example: {{ example }}</div>
-            {% else %}
-            <div class="example">Example: Not available</div>
-            {% endif %}
-        </div>
+    {% if word %}
+    <div class="result">
+        <div class="word">{{ word }}</div>
+        <div class="meaning">Meaning: {{ meaning }}</div>
+        {% if example %}
+        <div class="example">Example: {{ example }}</div>
+        {% else %}
+        <div class="example">Example: Not available</div>
         {% endif %}
     </div>
+    {% endif %}
+</div>
 </body>
 </html>
