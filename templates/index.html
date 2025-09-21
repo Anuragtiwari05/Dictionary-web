@@ -4,41 +4,37 @@
 <meta charset="UTF-8">
 <title>Dictionary App</title>
 <style>
-    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 50px; }
-    .container { background: #fff; padding: 30px; border-radius: 10px; width: 100%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
-    h1 { text-align: center; margin-bottom: 20px; }
-    form { display: flex; gap: 5px; margin-bottom: 20px; }
-    input[type="text"], select { flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-    input[type="submit"] { padding: 8px 15px; border: none; background: #3b82f6; color: white; border-radius: 5px; cursor: pointer; }
-    input[type="submit"]:hover { background: #2563eb; }
-    .result { margin-top: 15px; }
-    .word { font-weight: bold; font-size: 20px; }
-    .meaning, .example { margin-top: 5px; }
+  body { font-family: Arial, sans-serif; background:#f0f4f8; display:flex; justify-content:center; padding:50px; }
+  .container { background:#fff; padding:20px; border-radius:10px; width:100%; max-width:350px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+  h1 { text-align:center; margin-bottom:15px; font-size:22px; }
+  form { display:flex; gap:5px; margin-bottom:15px; }
+  input, select { flex:1; padding:8px; border-radius:5px; border:1px solid #ccc; }
+  input[type="submit"] { flex:none; background:#3b82f6; color:#fff; border:none; cursor:pointer; }
+  input[type="submit"]:hover { background:#2563eb; }
+  .result { margin-top:10px; }
+  .word { font-weight:bold; font-size:18px; }
+  .meaning, .example { margin-top:5px; font-size:14px; }
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>Dictionary App</h1>
-    <form method="POST">
-        <input type="text" name="word" placeholder="Enter a word" required>
-        <select name="lang">
-            <option value="english">English</option>
-            <option value="hindi">Hinglish → Hindi</option>
-        </select>
-        <input type="submit" value="Search">
-    </form>
+  <h1>Dictionary App</h1>
+  <form method="POST">
+    <input type="text" name="word" placeholder="Enter a word" required>
+    <select name="lang">
+      <option value="english">English</option>
+      <option value="hindi">Hinglish → Hindi</option>
+    </select>
+    <input type="submit" value="Search">
+  </form>
 
-    {% if word %}
-    <div class="result">
-        <div class="word">{{ word }}</div>
-        <div class="meaning">Meaning: {{ meaning }}</div>
-        {% if example %}
-        <div class="example">Example: {{ example }}</div>
-        {% else %}
-        <div class="example">Example: Not available</div>
-        {% endif %}
-    </div>
-    {% endif %}
+  {% if word %}
+  <div class="result">
+    <div class="word">{{ word }}</div>
+    <div class="meaning">Meaning: {{ meaning }}</div>
+    <div class="example">Example: {{ example or 'Not available' }}</div>
+  </div>
+  {% endif %}
 </div>
 </body>
 </html>
