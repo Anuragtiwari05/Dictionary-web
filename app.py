@@ -1,58 +1,46 @@
-from flask import Flask, render_template, request  ## Import Flask modules: Flask for app, render_template to render HTML, request to get form data
-import requests  ## Import requests to make HTTP calls to the dictionary API
+from flask import Flask, render_template, request
+import requests
 from indic_transliteration import sanscript
-from indic_transliteration.sanscript import transliterate ##for hindi and urdu 
+from indic_transliteration.sanscript import transliterate
 
-app = Flask(__name__)  ## Create a Flask app instance
+app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])  ## Define the main route "/" and allow GET (page load) and POST (form submission)
+@app.route("/", methods=["GET", "POST"])
 def home():
-    ## Initialize variables to pass to the HTML template
-    word = ""             ## The word entered by the user
-    meaning = ""          ## Meaning of the word
-    example = ""          ## Example sentence (if available)
-   
+    # Initialize variables
+    word = ""
+    meaning = ""
+    example = ""
+    script_word = ""
 
-    if request.method == "POST":  ## Check if user submitted the form
-        word = request.form.get("word").lower()  ## Get the word from the form and convert to lowercase
-        lang = request.form.get("lang")  ## Get the selected language from the form
+    if request.method == "POST":
+        word = request.form.get("word").lower()
+        lang = request.form.get("lang")
 
-       # 🔹 Transliteration step
+        # Transliteration for Hindi/Urdu
         if lang == "hindi":
             script_word = transliterate(word, sanscript.ITRANS, sanscript.DEVANAGARI)
+            meaning = f"Converted word: {script_word} (dictionary lookup not available yet)"
         elif lang == "urdu":
             script_word = transliterate(word, sanscript.ITRANS, sanscript.URDU)
-        else:
-            script_word = word   # English stays same
-
-        # 🔹 API only supports English
-        if lang == "english":
-            url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
-
-        ## Call the API
-        response = requests.get(url)
-
-        if response.status_code == 200:  ## If the API returns success
-            data = response.json()[0]    ## Get the first item from the JSON response
-
-            ## Extract meanings
-            meanings = data.get("meanings", [])  ## Get the 'meanings' list
-            if meanings:                        ## If meanings exist
-                definitions = meanings[0].get("definitions", [])  ## Get first part of definitions
-                if definitions:                                 ## If definitions exist
-                    meaning = definitions[0].get("definition", "No definition found")  ## Get the definition
-                    example = definitions[0].get("example", "")  ## Get example if available
-
-            
-           
-
-        else:  ## If the word is not found
-            meaning = "Word not found!"
-    else:
-            # For Hindi/Urdu → just show converted script (no API support yet)
             meaning = f"Converted word: {script_word} (dictionary lookup not available yet)"
+        else:  # English
+            script_word = word
+            url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+            response = requests.get(url)
 
-    ## Render the HTML template and pass variables
+            if response.status_code == 200:
+                data = response.json()[0]
+                meanings = data.get("meanings", [])
+                if meanings:
+                    definitions = meanings[0].get("definitions", [])
+                    if definitions:
+                        meaning = definitions[0].get("definition", "No definition found")
+                        example = definitions[0].get("example", "")
+            else:
+                meaning = "Word not found!"
+
+    # Render template
     return render_template(
         "index.html",
         word=word,
@@ -61,6 +49,5 @@ def home():
         script_word=script_word
     )
 
-## Run the Flask app
 if __name__ == "__main__":
-    app.run(debug=True)  ## Run in debug mode so changes auto-reload and errors are visible
+    app.run(debug=True)

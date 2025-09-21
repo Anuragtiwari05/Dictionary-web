@@ -32,19 +32,33 @@
             display: flex;
             justify-content: center;
             margin-bottom: 30px;
+            gap: 8px;
         }
 
         input[type="text"] {
-            width: 70%;
+            width: 50%;
             padding: 12px 15px;
             font-size: 16px;
             border: 2px solid #cbd5e1;
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px;
             outline: none;
             transition: border-color 0.3s;
         }
 
         input[type="text"]:focus {
+            border-color: #3b82f6;
+        }
+
+        select {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
             border-color: #3b82f6;
         }
 
@@ -54,7 +68,7 @@
             border: none;
             background-color: #3b82f6;
             color: white;
-            border-radius: 0 8px 8px 0;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -99,7 +113,7 @@
             }
 
             input[type="text"] {
-                width: 60%;
+                width: 40%;
             }
         }
     </style>
@@ -109,6 +123,14 @@
         <h1>Dictionary App</h1>
         <form method="POST">
             <input type="text" name="word" placeholder="Enter a word" required>
+
+            <!-- 🔹 Language Selector -->
+            <select name="lang">
+                <option value="english">English</option>
+                <option value="hindi">Hinglish → Hindi</option>
+               
+            </select>
+
             <input type="submit" value="Search">
         </form>
 
